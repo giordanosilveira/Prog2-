@@ -16,7 +16,7 @@ int main () {
     scanf("%[^\n]", string);
     getchar ();
 
-    for (i=strlen(string); i >= 0; i--)
+    for (i=strlen(string); i >= 0; i--) //Vai do final da string ao começo printando
         printf ("%c", string[i]);
 
     printf ("\n");
