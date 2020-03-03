@@ -14,12 +14,12 @@ int main () {
     int i, cont;
     char string[MAX + 1];
 
-    scanf("%[^\n]", string);
-    getchar ();
+    scanf("%[^\n]", string); // lê enquanto não enxerga um ENTER
+    getchar ()
 
     i=0;
     cont=0;
-    while (string[i] != '\0') {
+    while (string[i] != '\0') { // Enquanto não chegou ao fim da string, aumenta o contador
         cont++;
         i++;
     }
