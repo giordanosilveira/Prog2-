@@ -3,44 +3,38 @@
 #include <string.h>
 #define MAX 100
 
-void stringcat (char *word1, char *word2, char *cat) {
+void strconcat (char *dest, char *orig, int t1, int t2) {
 
     int i,j;
 
     i = 0;
-    while (word1[i] != '\0') {
-       cat[i] = word1[i];
-       i++;
-    }
 
-    j = 0;
-    while (word2[j] != '\0') {
-        cat[i-1] = word2[j];
+    while (orig[i] != '\0') {
+        dest[t1 + 1] = orig[i];
         i++;
+        t1++;
     }
+    dest[t1 + 1] = orig[i];
 }
-
 int main () {
 
-    char *word1, *word2, *cat;
+    char dest[MAX + 1], orig[MAX + 1];
     int tam1, tam2;
 
-    word1 = (char*)malloc(sizeof(char)*MAX);
-    word2 = (char*)malloc(sizeof(char)*MAX);
-    scanf ("%[^\n]", word1);
-    getchar ();
-    scanf ("%[^\n]", word2);
-    getchar ();
+    scanf ("%[^\n]", dest);
+    getchar();
 
-    tam1 = strlen (word1);
-    tam2 = strlen (word2);
+    scanf ("%[^\n]", orig);
+    getchar();
 
-    if (tam1 == 0 && tam2 == 0)
-        printf ("Não é possivel concatenar");
+    tam1 = strlen (dest);
+    tam2 = strlen (orig);
+
+    if (tam2 == 0)
+        printf ("Vai se fuder\n");
     else {
-        cat = (char *)malloc(sizeof(char)*(tam1 + tam2));
-        stringcat (word1,word2,cat);
-        printf ("%s\n", cat);
+        strconcat (dest,orig,tam1,tam2);
+        printf ("%s\n", dest); 
     }
 
     return 0;
