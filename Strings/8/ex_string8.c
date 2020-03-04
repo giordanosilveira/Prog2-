@@ -1,3 +1,12 @@
+/*
+----------------------------------------------------------------ENUNCIADO----------------------------------------------------------------------
+|                                           Escreva uma função int busca(agulha, palheiro),                                                    |
+|                   que busca a string agulha dentro da string palheiro, sem usar funções prontas da biblioteca C.                             | 
+|            A função deve retornar o índice onde agulha começa em palheiro, -1 se não for encontrada ou -2 em caso de erro                    | 
+|                                                 (uma ou ambas as strings são nulas).                                                         |
+-----------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
