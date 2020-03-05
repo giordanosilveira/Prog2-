@@ -10,11 +10,11 @@ void strconcat (char *dest, char *orig, int t1, int t2) {
     i = 0;
 
     while (orig[i] != '\0') {
-        dest[t1 + 1] = orig[i];
+        dest[t1] = orig[i];
         i++;
         t1++;
     }
-    dest[t1 + 1] = orig[i];
+    dest[t1] = orig[i];
 }
 int main () {
 

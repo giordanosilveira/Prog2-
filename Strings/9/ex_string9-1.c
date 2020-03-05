@@ -29,9 +29,9 @@ int main () {
         copy = (char*)malloc(sizeof(char)*tam + 1);
         stringcpy (word,copy);
         printf ("%s\n", copy);
+        free (copy);
     }
     free (word);
-    free (copy);
     
     return 0;
 }
