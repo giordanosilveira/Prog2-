@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define S_MAX 256
+#define S_MAX 1024
 
 int main () {
 
-    char line[S_MAX];
+    char line[S_MAX],word[S_MAX], *here;
     FILE *orig;
 
     orig = fopen ("texto.txt", "r");
@@ -15,8 +15,15 @@ int main () {
         exit (1);
     }
 
-    while ( ! (fscanf(orig,"%[^\n]",line))) {
-        //testa lin
+    scanf ("%s", word);
+    while ( fgets (line,S_MAX,orig)) {
+        here = strstr (line,word);
+        //printf ("%s\n",word);
+        if (here) {
+            printf ("Existe\n");
+            return 0;
+        }
     }
-    return 1;
+    printf ("Não existe\n");
+    return 0;
 }
