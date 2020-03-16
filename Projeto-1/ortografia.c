@@ -17,34 +17,32 @@ char ** aloc_array () {
     return matrix;
 }
 
-void reaDictionary (FILE *arq1, char **words, int *tam) {
+char ** reaDictionary (FILE *arq1, char **words, int *tam) {
 
     int i;
 
-    i = 0;
     *tam = MAX_ALT;
-    while ( fscanf (arq1,"%s",words[i]) != EOF ) {
-
-        printf ("%s\n", words[i]);
-        
-        if (i % (MAX_ALT - 1) == 0) {
+    //fscanf (arq1,"%s",words[i]);
+    for (i = 0; ! feof(arq1); i++) {
+        fscanf (arq1,"%s",words[i]);
+        if (i % (MAX_ALT - 2) == 0) {
             words = (char **)realloc(words,sizeof(char *)*(MAX_ALT+*tam));
             for (int j = i; j < (MAX_ALT + *tam); j++)
                 words[j] = (char *)malloc(sizeof(char)*MAX_LARG);
-
             *tam += MAX_ALT;
-        }
-        i++;      
-    }
+        }    
 
+    }
+    *tam = i;
+    return words;
 }
 
 void writedictionary (char ** words, int tam) {
 
     int i;
     for (i = 0; i < tam; i++) {
-        printf ("%s", words[i]);
-        printf ("\n");
+        printf ("%s\n", words[i]);
+        //printf ("\n");
     }
 }
 
@@ -58,8 +56,9 @@ int main () {
 
     ar_dict = aloc_array ();                               // Aloca array
 
-    reaDictionary (dict,ar_dict,&tam_dict);
+    ar_dict = reaDictionary (dict,ar_dict,&tam_dict);
 
+    printf ("%d\n", tam_dict);
     writedictionary (ar_dict,tam_dict);
 
     return 0;
