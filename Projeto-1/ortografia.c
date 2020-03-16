@@ -23,9 +23,10 @@ void reaDictionary (FILE *arq1, char **words, int *tam) {
 
     i = 0;
     *tam = MAX_ALT;
-    while ( feof (arq1) != EOF) {
+    while ( fscanf (arq1,"%s",words[i]) != EOF ) {
 
-        fscanf (arq1,"%s",words[i]);
+        printf ("%s\n", words[i]);
+        
         if (i % (MAX_ALT - 1) == 0) {
             words = (char **)realloc(words,sizeof(char *)*(MAX_ALT+*tam));
             for (int j = i; j < (MAX_ALT + *tam); j++)
@@ -33,8 +34,7 @@ void reaDictionary (FILE *arq1, char **words, int *tam) {
 
             *tam += MAX_ALT;
         }
-        printf ("%d %d\n", i, *tam);
-        i++;
+        i++;      
     }
 
 }
@@ -54,9 +54,7 @@ int main () {
     char **ar_dict;
     FILE *dict;
 
-    setlocale (LC_CTYPE, "pt_br.ISO-8859-1");
-
-    dict = fopen ("brazilian", "r");
+    dict = fopen ("/usr/share/dict/brazilian", "r");
 
     ar_dict = aloc_array ();                               // Aloca array
 
