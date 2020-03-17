@@ -117,6 +117,7 @@ int main () {
         perror ("Não deu boa");
         exit (1);
     }
+
     t_dictionary dictionary;
     char word[H_MAX], c;
     FILE *dict, *text;
