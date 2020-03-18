@@ -6,7 +6,7 @@
 #define H_MAX 10000
 #define W_MAX 64
 #define ZERO 0
-//#define
+#define MINUS 32
 //#define
 //#define
 //#define
@@ -57,7 +57,7 @@ char ** allcte_mem () {
 
 }*/
 
-int is_char (char c){
+int is_char (int c){
 
     if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122) 
         || (c >= 192 && c <= 220) || (c >= 224 && c <= 252)) {
@@ -108,6 +108,43 @@ void free_memory (t_dictionary *d) {
         free (d->memory[i]);
 
 }
+void minuscule (int c) {
+
+    if ((c >= 65 && c <= 90) || (c >= 192 && 220 <= c))
+        c += MINUS;
+    
+}
+
+int s_cmp (char *dict, char *word) {
+
+    
+
+}
+int srchin_dict (char *word, t_dictionary *dict) {
+
+    int first, end, mid, cmp = 1;
+
+    first = 0;
+    end = dict->s_real - 1;
+    while (first < end) {
+        
+        mid = (first + end)/2;
+        cmp = cmp * -1; 
+
+        printf ("%s -> %s\n", dict->memory[mid], word);
+        //s_cmp (dict->memory[mid],word);
+        
+        if (cmp == 0)
+            return 1;
+        else if ( cmp < 0 )
+            end = mid - 1;
+        else
+            first = mid;
+    }
+    return 0;
+
+}
+
 int main () {
 
     char *locale;
@@ -119,7 +156,7 @@ int main () {
     }
 
     t_dictionary dictionary;
-    char word[H_MAX], c;
+    char word[W_MAX], c;
     FILE *dict, *text;
 
     init_dict (&dictionary);
@@ -142,37 +179,37 @@ int main () {
 
     fclose (dict);
 
+    int i;
     text = stdin;
-    c = fgetc (text); 
-    while (c != EOF) {
+    i = fgetc (text); 
+    while (i != EOF) {
         
-        while ((! is_char(c)) && (c != EOF)) {
+        while ((! is_char(i)) && (i != EOF)) {
+            c = (char)i;
             printf ("%c", c);
-            c = fgetc (text);
+            i = fgetc (text);
         }
 
-        /*word[H_MAX] = {0};
-        int i = 0;
-        while ((is_char(c)) && (c != EOF)) {
-            minuscule (c);
-            word[i] = c;
-            i++;
-            c = fgetc (text);
+        word[0] = '\0'; 
+        int j = 0;
+        while ((is_char(i)) && (i != EOF)) {
+            minuscule (i);
+            c = (int)i;
+            word[j] = c;
+            j++;
+            i = fgetc (text);
         }
+        word[j] = '\0';
 
-        if (srchin_dict (dict,word)) 
-            printf ("%s", word[i]);
+        if (srchin_dict (word,&dictionary)) 
+            printf ("%s", word);
         else
-            printf ("[ %s ]", word[i]);*/ 
+            printf ("[ %s ]", word); 
         
-        c = fgetc (text);
+        //i = fgetc (text);
     }
 
-    int i;
-
-    /*i = 220;
-    printf ("%c", i);*/
-
+    printf("\n");
     free_memory (&dictionary);
 
     return 0;
