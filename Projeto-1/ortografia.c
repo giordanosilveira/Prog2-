@@ -117,7 +117,15 @@ void minuscule (int c) {
 
 int s_cmp (char *dict, char *word) {
 
-    
+    int i = 0;
+    while (dict[i] != '\0') {
+
+        if (word[i] != dict[i]) 
+            break;
+        
+        i++;
+    }
+    return (unsigned char)dict[i] - (unsigned char)word[i];    
 
 }
 int srchin_dict (char *word, t_dictionary *dict) {
@@ -129,17 +137,15 @@ int srchin_dict (char *word, t_dictionary *dict) {
     while (first < end) {
         
         mid = (first + end)/2;
-        cmp = cmp * -1; 
+        cmp = s_cmp (dict->memory[mid],word);
 
-        printf ("%s -> %s\n", dict->memory[mid], word);
-        //s_cmp (dict->memory[mid],word);
-        
+        printf ("%s %s\n", dict->memory[mid], word);
         if (cmp == 0)
             return 1;
         else if ( cmp < 0 )
-            end = mid - 1;
+            first = mid + 1;
         else
-            first = mid;
+            end = mid - 1;
     }
     return 0;
 
@@ -160,7 +166,7 @@ int main () {
     FILE *dict, *text;
 
     init_dict (&dictionary);
-    dict = fopen ("brazilian.txt", "r");
+    dict = fopen ("brazilian", "r");
 
     if (! dict ) {                                       // check if it was possible to open the file
         perror ("Couldn't open file");
@@ -204,9 +210,8 @@ int main () {
         if (srchin_dict (word,&dictionary)) 
             printf ("%s", word);
         else
-            printf ("[ %s ]", word); 
-        
-        //i = fgetc (text);
+            printf ("[%s]", word); 
+    
     }
 
     printf("\n");
