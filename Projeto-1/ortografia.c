@@ -60,7 +60,7 @@ char ** allcte_mem () {
 int is_char (char c){
 
     if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122) 
-        || (c >= 192 && c <= 220) || (c >= 224 && c <= 252)) {
+        || (c >= 'À' && c <= 'Ü') || (c >= 'à' && c <= 'ü')) {
         return 1;
     }
     return 0;
@@ -114,7 +114,7 @@ int main () {
     locale = setlocale (LC_CTYPE, "pt_BR.ISO-8859-1");
 
     if (! locale) {
-        perror ("Não deu boa");
+        perror ("Can't set the specified locale");
         exit (1);
     }
 
@@ -145,13 +145,13 @@ int main () {
     text = stdin;
     c = fgetc (text); 
     while (c != EOF) {
-        printf ("%c", c);
-        /*while ((! is_char(c)) && (c != EOF)) {
+        
+        while ((! is_char(c)) && (c != EOF)) {
             printf ("%c", c);
             c = fgetc (text);
         }
 
-        word[H_MAX] = {0};
+        /*word[H_MAX] = {0};
         int i = 0;
         while ((is_char(c)) && (c != EOF)) {
             minuscule (c);
@@ -167,6 +167,11 @@ int main () {
         
         c = fgetc (text);
     }
+
+    int i;
+
+    /*i = 220;
+    printf ("%c", i);*/
 
     free_memory (&dictionary);
 
