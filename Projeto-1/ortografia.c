@@ -122,7 +122,7 @@ int main () {
     FILE *dict, *text;
 
     init_dict (&dictionary);
-    dict = fopen ("/usr/share/dict/brazilian", "r");
+    dict = fopen ("brazilian.txt", "r");
 
     if (! dict ) {                                       // check if it was possible to open the file
         perror ("Couldn't open file");
