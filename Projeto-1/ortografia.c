@@ -114,9 +114,10 @@ int main () {
     locale = setlocale (LC_CTYPE, "pt_BR.ISO-8859-1");
 
     if (! locale) {
-        perror ("Não deu boa");
+        perror ("Can't set the specified locale");
         exit (1);
     }
+
     t_dictionary dictionary;
     char word[H_MAX], c;
     FILE *dict, *text;
@@ -144,13 +145,13 @@ int main () {
     text = stdin;
     c = fgetc (text); 
     while (c != EOF) {
-        printf ("%c", c);
-        /*while ((! is_char(c)) && (c != EOF)) {
+        
+        while ((! is_char(c)) && (c != EOF)) {
             printf ("%c", c);
             c = fgetc (text);
         }
 
-        word[H_MAX] = {0};
+        /*word[H_MAX] = {0};
         int i = 0;
         while ((is_char(c)) && (c != EOF)) {
             minuscule (c);
@@ -166,6 +167,11 @@ int main () {
         
         c = fgetc (text);
     }
+
+    int i;
+
+    /*i = 220;
+    printf ("%c", i);*/
 
     free_memory (&dictionary);
 
