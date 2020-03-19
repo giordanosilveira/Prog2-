@@ -11,6 +11,9 @@
 //#define
 //#define
 
+//Estrutura do tipo da palavra procurada, char e int
+//Estrutura da palavra
+
 struct t_dictionary {
     char **memory;
     int s_mem;
@@ -108,10 +111,10 @@ void free_memory (t_dictionary *d) {
         free (d->memory[i]);
 
 }
-void minuscule (int c) {
+void minuscule (int *c) {
 
-    if ((c >= 65 && c <= 90) || (c >= 192 && 220 <= c))
-        c += MINUS;
+    if ((*c >= 65 && *c <= 90) || (*c >= 192 && 220 >= *c))
+        *c += MINUS;
     
 }
 
@@ -139,7 +142,7 @@ int srchin_dict (char *word, t_dictionary *dict) {
         mid = (end + first)/2;
         cmp = s_cmp (dict->memory[mid],word);
 
-        printf ("%s %s\n", dict->memory[mid], word);
+        //printf ("%s %s\n", dict->memory[mid], word);
         if (cmp == 0)
             return 1;
         else if ( cmp < 0 )
@@ -204,19 +207,27 @@ int main () {
         word[0] = '\0'; 
         int j = 0;
         while ((is_char(i)) && (i != EOF)) {
-            minuscule (i);
+            //printf ("%c %d", i, i);
+            minuscule (&i);
+            //printf (" %c %d\n", i, i);
             c = (int)i;
             word[j] = c;
             j++;
             i = fgetc (text);
         }
         word[j] = '\0';
-
-        if (srchin_dict (word,&dictionary)) 
+        
+        if (srchin_dict (word,&dictionary)){
+            //se a palavra foi modificada
+                // desmodifica 
             printf ("%s", word);
-        else
-            printf ("[%s]", word); 
-    
+        }
+        else {
+            //se a palavra foi modificada
+                // desmodifica 
+            printf ("[%s]", word);
+        }
+
     }
 
     printf("\n");
