@@ -130,13 +130,13 @@ int s_cmp (char *dict, char *word) {
 }
 int srchin_dict (char *word, t_dictionary *dict) {
 
-    int first, end, mid, cmp = 1;
+    int first, end, mid, cmp;
 
     first = 0;
-    end = dict->s_real - 1;
-    while (first < end) {
+    end = dict->s_real - 2;
+    while (first <= end) {
         
-        mid = (first + end)/2;
+        mid = (end + first)/2;
         cmp = s_cmp (dict->memory[mid],word);
 
         printf ("%s %s\n", dict->memory[mid], word);
@@ -147,6 +147,11 @@ int srchin_dict (char *word, t_dictionary *dict) {
         else
             end = mid - 1;
     }
+
+    /*if (! s_cmp (dict->memory[mid - 1],word))
+        return 1;
+    if (! s_cmp (dict->memory[mid + 1],word))
+        return 1;*/
     return 0;
 
 }
