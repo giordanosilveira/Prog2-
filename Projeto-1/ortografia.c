@@ -14,17 +14,30 @@
 //Estrutura do tipo da palavra procurada, char e int
 //Estrutura da palavra
 
+struct t_word {
+    int ctrl[W_MAX];
+    char array[W_MAX];
+    int change;
+};
+typedef struct t_word t_word; 
+
 struct t_dictionary {
     char **memory;
     int s_mem;
     int s_real;
 };
-
 typedef struct t_dictionary t_dictionary;
 
 void init_dict (t_dictionary * dict) {
     dict->s_mem = H_MAX;
     dict->s_real = ZERO;
+}
+
+void init_word (t_word *word) {
+    word->array[0] = '\0';
+    for (int i = 0; i < W_MAX; i++)
+        word->ctrl[i] = ZERO;
+    word->change = ZERO;
 }
 
 char ** allcte_mem () {
@@ -111,11 +124,22 @@ void free_memory (t_dictionary *d) {
         free (d->memory[i]);
 
 }
-void minuscule (int *c) {
+int minuscule (int *c) {
 
-    if ((*c >= 65 && *c <= 90) || (*c >= 192 && 220 >= *c))
+    if ((*c >= 65 && *c <= 90) || (*c >= 192 && 220 >= *c)) {
         *c += MINUS;
-    
+        return 1;
+    }
+    return 0;
+}
+
+void normalize (t_word *word, int j) {
+
+    for (int i = 0; i < j; i++){
+        if (word->ctrl[i] == 1) {
+            word->array[i] -= MINUS; 
+        }
+    }
 }
 
 int s_cmp (char *dict, char *word) {
@@ -131,6 +155,7 @@ int s_cmp (char *dict, char *word) {
     return (unsigned char)dict[i] - (unsigned char)word[i];    
 
 }
+
 int srchin_dict (char *word, t_dictionary *dict) {
 
     int first, end, mid, cmp;
@@ -151,10 +176,6 @@ int srchin_dict (char *word, t_dictionary *dict) {
             end = mid - 1;
     }
 
-    /*if (! s_cmp (dict->memory[mid - 1],word))
-        return 1;
-    if (! s_cmp (dict->memory[mid + 1],word))
-        return 1;*/
     return 0;
 
 }
@@ -170,7 +191,8 @@ int main () {
     }
 
     t_dictionary dictionary;
-    char word[W_MAX], c;
+    t_word word; 
+    char c;
     FILE *dict, *text;
 
     init_dict (&dictionary);
@@ -204,28 +226,29 @@ int main () {
             i = fgetc (text);
         }
 
-        word[0] = '\0'; 
+        init_word(&word); 
         int j = 0;
         while ((is_char(i)) && (i != EOF)) {
-            //printf ("%c %d", i, i);
-            minuscule (&i);
-            //printf (" %c %d\n", i, i);
+            if (minuscule (&i)) {
+                word.ctrl[j] = 1;
+                word.change = 1;
+            }
             c = (int)i;
-            word[j] = c;
+            word.array[j] = c;
             j++;
             i = fgetc (text);
         }
-        word[j] = '\0';
+        word.array[j] = '\0';
         
-        if (srchin_dict (word,&dictionary)){
-            //se a palavra foi modificada
-                // desmodifica 
-            printf ("%s", word);
+        if (srchin_dict (word.array,&dictionary)){
+            if (word.change)
+                normalize (&word,j); 
+            printf ("%s", word.array);
         }
         else {
-            //se a palavra foi modificada
-                // desmodifica 
-            printf ("[%s]", word);
+            if (word.change)
+                normalize (&word,j); 
+            printf ("[%s]", word.array);
         }
 
     }
