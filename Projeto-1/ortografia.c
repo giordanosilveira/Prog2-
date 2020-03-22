@@ -75,7 +75,7 @@ char ** allcte_mem () {
 
 int is_char (int c){
 
-    if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122) 
+    if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) 
         || (c >= 192 && c <= 220) || (c >= 224 && c <= 252)) {
         return 1;
     }
@@ -166,8 +166,6 @@ int srchin_dict (char *word, t_dictionary *dict) {
         
         mid = (end + first)/2;
         cmp = s_cmp (dict->memory[mid],word);
-
-        //printf ("%s %s\n", dict->memory[mid], word);
         if (cmp == 0)
             return 1;
         else if ( cmp < 0 )
@@ -175,7 +173,6 @@ int srchin_dict (char *word, t_dictionary *dict) {
         else
             end = mid - 1;
     }
-
     return 0;
 
 }
@@ -240,15 +237,23 @@ int main () {
         }
         word.array[j] = '\0';
         
-        if (srchin_dict (word.array,&dictionary)){
+        int cmp = srchin_dict(word.array,&dictionary); 
+        if (cmp) {
             if (word.change)
-                normalize (&word,j); 
-            printf ("%s", word.array);
+                normalize (&word,j);
+            printf ("%s",word.array);
         }
         else {
-            if (word.change)
-                normalize (&word,j); 
-            printf ("[%s]", word.array);
+            if (word.change) {
+                normalize (&word,j);
+                cmp = srchin_dict (word.array,&dictionary);
+                if (! cmp)
+                    printf("[%s]", word.array);
+                else
+                    printf ("%s", word.array);
+            }
+            else
+                printf ("[%s]", word.array);
         }
 
     }
