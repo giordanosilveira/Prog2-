@@ -7,7 +7,7 @@
 int main () {
 
 	char str[MAX];
-	int i, len, yes;
+	int i, len, yes, j;
 
 	fgets (str, MAX, stdin);
 
@@ -17,7 +17,7 @@ int main () {
 	yes = 0;
 	while (i < len) {
 		if (str[i] == str[i + 1]) {
-			j = i;
+			int j = i;
 			yes = 1;
 			while (str[j] != '\0') {
 				str[j] = str[j + 1];
@@ -32,12 +32,13 @@ int main () {
 					str[j] = str[j + 1];
 					j++;
 				}
-				len--
+				len--;
 			}
 			i++;
 			yes = 0;
 		} 	
 	}
+	printf ("%s\n", str);
 
 
 	return 0;
