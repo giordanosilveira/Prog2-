@@ -25,7 +25,7 @@ int main () {
 		len++;
 
 	for (i = 0; i < len; i++) {
-		printf ("%d %c\n", str[i], str[i]);
+	//	printf ("%d %c\n", str[i], str[i]);
 		if ((str[i] <= 122 && str[i] >= 97) || (str[i] <= 251 && str[i] >= 224 ))
 			str[i] = str[i] - 32;
 	}
